@@ -16,6 +16,8 @@ import('lib.pkp.classes.controllers.grid.GridHandler');
 import('plugins.generic.displayMetadata.controllers.grid.DisplayMetadataGridRow');
 import('plugins.generic.displayMetadata.controllers.grid.DisplayMetadataGridCellProvider');
 
+define('STATUS_PUBLISHED', 3);
+
 class DisplayMetadataGridHandler extends GridHandler {
 	static $plugin;
 
@@ -57,6 +59,7 @@ class DisplayMetadataGridHandler extends GridHandler {
 	 * @copydoc Gridhandler::initialize()
 	 */
 	function initialize($request, $args = null) {
+
 		parent::initialize($request, $args);
 		$context = $request->getContext();
 
@@ -65,12 +68,12 @@ class DisplayMetadataGridHandler extends GridHandler {
 		$this->setEmptyRowText('plugins.generic.displayMetadata.noneCreated');
 
 		$gridData = null;
-		
+
 		$publishedSubmissions = Services::get('submission')->getMany([
 			'contextId' => $context->getId(),
-			'status' => STATUS_PUBLISHED,
-		]);	
-				
+			'status' => STATUS_PUBLISHED
+		]);
+
 		$gridData = array();
 		foreach ($publishedSubmissions as $submission) {
 			$publicationDao = DAORegistry::getDAO('PublicationDAO');
@@ -140,7 +143,7 @@ class DisplayMetadataGridHandler extends GridHandler {
 	function getRowInstance() {
 		return new DisplayMetadataGridRow();
 	}
-	
+
 }
 
 ?>
