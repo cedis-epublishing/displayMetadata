@@ -134,6 +134,14 @@ class DisplayMetadataGridHandler extends GridHandler {
 
 	}
 
+	/**
+	 * @copydoc GridHandler::initFeatures()
+	 */
+	function initFeatures($request, $args) {
+		import('lib.pkp.classes.controllers.grid.feature.PagingFeature');
+		return array(new PagingFeature());
+	}
+
 	//
 	// Overridden methods from GridHandler
 	//
