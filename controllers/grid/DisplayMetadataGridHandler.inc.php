@@ -76,20 +76,22 @@ class DisplayMetadataGridHandler extends GridHandler {
 
 		$gridData = array();
 		foreach ($publishedSubmissions as $submission) {
+
 			$publicationDao = DAORegistry::getDAO('PublicationDAO');
 			$publication = $publicationDao->getById($submission->getData('currentPublicationId'));
 			//$publicationLocale = ($submission->getData('locale')) ? $submission->getData('locale') : 'en_US';
 			//$locale = AppLocale::getLocale() ? AppLocale::getLocale() : 'en_US';
 			
-			$gridData[] = array(
-				'submissionId' => $submission->getId(),
-				'doi' => $publication->getData('pub-id::doi') ? $publication->getData('pub-id::doi') : '---',
-				'licenseUrl' => $publication->getData('licenseUrl') ? $publication->getData('licenseUrl') : '---',
-				'locale' => $submission->getData('locale') ,
-				'datePublished' => $submission->getDatePublished() 				
-
-			);
-		}	
+			if ($publication) {
+				$gridData[] = array(
+					'submissionId' => $submission->getId(),
+					'doi' => $publication->getData('pub-id::doi') ? $publication->getData('pub-id::doi') : '---',
+					'licenseUrl' => $publication->getData('licenseUrl') ? $publication->getData('licenseUrl') : '---',
+					'locale' => $submission->getData('locale') ,
+					'datePublished' => $submission->getDatePublished()
+				);
+			}
+		}
 		//krsort($gridData);
 
 		$this->setGridDataElements($gridData);
